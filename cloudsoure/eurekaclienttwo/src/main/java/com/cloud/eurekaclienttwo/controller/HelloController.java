@@ -10,7 +10,7 @@ import java.io.IOException;
 public class HelloController {
 
     @RequestMapping("index")
-    public String index(){
+    public String index() {
         return "这是一个eurekaclient";
     }
 //    @RequestMapping("/")

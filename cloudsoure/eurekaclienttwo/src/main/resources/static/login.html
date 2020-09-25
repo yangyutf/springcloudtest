@@ -19,7 +19,7 @@
             margin: 35px 15px 10px;
         }
 
-        .title+.content {
+        .title + .content {
             margin: 10px 15px 35px;
             color: #bbb;
             text-indent: 1em;
@@ -41,7 +41,9 @@
 				<span id="android-only">；3.Android手机按back键；4.Android手机按menu键。
 				</span></span>
         <p style="margin: 10px 15px;">
-            <button id="close-btn" type="button" class="mui-btn mui-btn-danger mui-btn-block" style="padding: 5px 20px;">关闭侧滑菜单</button>
+            <button id="close-btn" type="button" class="mui-btn mui-btn-danger mui-btn-block"
+                    style="padding: 5px 20px;">关闭侧滑菜单
+            </button>
         </p>
 
     </div>
@@ -78,9 +80,9 @@
 <script type="text/javascript" charset="utf-8">
     var aniShow = "slide-in-right";
     //关于backbutton和menubutton两个按键的说明，在iOS平台不存在，故需隐藏
-    if(!mui.os.android) {
+    if (!mui.os.android) {
         var span = document.getElementById("android-only")
-        if(span) {
+        if (span) {
             span.style.display = "none";
         }
     }
@@ -88,7 +90,7 @@
     var subWebview = null,
         template = null,
         index = null;
-    mui.plusReady(function() {
+    mui.plusReady(function () {
         //获得主页面webview引用；
         index = plus.webview.currentWebview().opener();
         var _self = plus.webview.currentWebview();
@@ -98,17 +100,18 @@
         }, {
             view: index,
             moveMode: "follow"
-        }, function(e) {});
+        }, function (e) {
+        });
 
     })
-    mui('.mui-table-view').on('tap', 'a', function() {
+    mui('.mui-table-view').on('tap', 'a', function () {
         var id = this.getAttribute("href");
         var type = this.getAttribute("open-type");
         var href = this.href;
 
         var webview_style = {
             popGesture: "close",
-            statusbar : {
+            statusbar: {
                 background: "#f7f7f7"
             }
         }
@@ -117,9 +120,9 @@
 
         var titleType = this.getAttribute("data-title-type");
 
-        if(titleType == "native") {
+        if (titleType == "native") {
 
-            if(!~id.indexOf('pullrefresh.html')) {
+            if (!~id.indexOf('pullrefresh.html')) {
                 webview_style.bounce = "vertical";
             }
 
@@ -158,24 +161,24 @@
                 height: "100%"
             });
             view.interceptTouchEvent(true);
-            view.addEventListener("click", function(e) {
+            view.addEventListener("click", function (e) {
                 webview.evalJS("mui.back();");
             }, false);
             webview.append(view);
 
-            webview.addEventListener("loaded", function() {
+            webview.addEventListener("loaded", function () {
                 webview.show(aniShow, 300, null, extras);
             })
 
         } else {
             //侧滑菜单需动态控制一下zindex值；
-            if(~id.indexOf('offcanvas-')) {
+            if (~id.indexOf('offcanvas-')) {
                 webview_style.zindex = 9998;
                 webview_style.popGesture = ~id.indexOf('offcanvas-with-right') ? "close" : "none";
             }
 
             var webview = plus.webview.create(this.href, id, webview_style, extras);
-            webview.addEventListener("loaded", function() {
+            webview.addEventListener("loaded", function () {
                 webview.show(aniShow, 300);
             });
         }
